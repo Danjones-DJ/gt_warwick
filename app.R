@@ -1633,22 +1633,37 @@ ui <- fluidPage(
           )
       ),
       
-      # Degree Types Section - ALL DEGREE TYPES
       h2(class = "section-header", "Degree Types"),
-      p(class = "section-subtitle", "Filter by specific qualification types (work in progress)"),
+      p(class = "section-subtitle", "Filter by specific qualification types"),
       
       div(class = "card-container",
           div(class = "degree-grid",
-              div(class = "degree-card", id = "interest_ba", onclick = "toggleInterest('ba', event)", "BA"),
+              # First row - most common degree types
               div(class = "degree-card", id = "interest_bsc", onclick = "toggleInterest('bsc', event)", "BSc"),
-              div(class = "degree-card", id = "interest_msci", onclick = "toggleInterest('msci', event)", "MSci"),
-              div(class = "degree-card", id = "interest_basc", onclick = "toggleInterest('basc', event)", "BASc"),
-              div(class = "degree-card", id = "interest_llb", onclick = "toggleInterest('llb', event)", "LLB"),
+              div(class = "degree-card", id = "interest_ba", onclick = "toggleInterest('ba', event)", "BA"),
               div(class = "degree-card", id = "interest_beng", onclick = "toggleInterest('beng', event)", "BEng"),
               div(class = "degree-card", id = "interest_meng", onclick = "toggleInterest('meng', event)", "MEng"),
-              div(class = "degree-card small-text", id = "interest_bscecon", onclick = "toggleInterest('bscecon', event)", "BSc (Econ)"),
+              div(class = "degree-card", id = "interest_msci", onclick = "toggleInterest('msci', event)", "MSci"),
+              div(class = "degree-card", id = "interest_llb", onclick = "toggleInterest('llb', event)", "LLB"),
+              
+              # Second row - specialized degrees
+              div(class = "degree-card small-text", id = "interest_mbbs", onclick = "toggleInterest('mbbs', event)", "MBBS"),
               div(class = "degree-card small-text", id = "interest_mbbsbsc", onclick = "toggleInterest('mbbsbsc', event)", "MBBS BSc"),
-              div(class = "degree-card", id = "interest_mpharm", onclick = "toggleInterest('mpharm', event)", "MPharm")
+              div(class = "degree-card", id = "interest_mpharm", onclick = "toggleInterest('mpharm', event)", "MPharm"),
+              div(class = "degree-card", id = "interest_basc", onclick = "toggleInterest('basc', event)", "BASc"),
+              div(class = "degree-card", id = "interest_bfa", onclick = "toggleInterest('bfa', event)", "BFA"),
+              div(class = "degree-card", id = "interest_mbio", onclick = "toggleInterest('mbio', event)", "MBio"),
+              
+              # Third row - specialized Master's degrees
+              div(class = "degree-card", id = "interest_mchem", onclick = "toggleInterest('mchem', event)", "MChem"),
+              div(class = "degree-card", id = "interest_mphys", onclick = "toggleInterest('mphys', event)", "MPhys"),
+              div(class = "degree-card small-text", id = "interest_mmathphys", onclick = "toggleInterest('mmathphys', event)", "MMathPhys"),
+              div(class = "degree-card", id = "interest_mmath", onclick = "toggleInterest('mmath', event)", "MMath"),
+              div(class = "degree-card small-text", id = "interest_mmathstat", onclick = "toggleInterest('mmathstat', event)", "MMathStat"),
+              div(class = "degree-card", id = "interest_mmorse", onclick = "toggleInterest('mmorse', event)", "MMORSE"),
+              
+              # Fourth row - combined degrees
+              div(class = "degree-card small-text", id = "interest_babsc", onclick = "toggleInterest('babsc', event)", "BA/BSc")
           )
       ),
       
@@ -2335,16 +2350,26 @@ server <- function(input, output, session) {
     
     # Filter by degree types
     selected_degrees <- c()
-    if(!is.null(input$interest_ba) && input$interest_ba) selected_degrees <- c(selected_degrees, "BA")
     if(!is.null(input$interest_bsc) && input$interest_bsc) selected_degrees <- c(selected_degrees, "BSc")
-    if(!is.null(input$interest_msci) && input$interest_msci) selected_degrees <- c(selected_degrees, "MSci")
-    if(!is.null(input$interest_basc) && input$interest_basc) selected_degrees <- c(selected_degrees, "BASc")
-    if(!is.null(input$interest_llb) && input$interest_llb) selected_degrees <- c(selected_degrees, "LLB")
+    if(!is.null(input$interest_ba) && input$interest_ba) selected_degrees <- c(selected_degrees, "BA")
     if(!is.null(input$interest_beng) && input$interest_beng) selected_degrees <- c(selected_degrees, "BEng")
     if(!is.null(input$interest_meng) && input$interest_meng) selected_degrees <- c(selected_degrees, "MEng")
-    if(!is.null(input$interest_bfa) && input$interest_bfa) selected_degrees <- c(selected_degrees, "BFA")
-    if(!is.null(input$interest_mbbs) && input$interest_mbbs) selected_degrees <- c(selected_degrees, "MBBS", "MBBS/BSc")
+    if(!is.null(input$interest_msci) && input$interest_msci) selected_degrees <- c(selected_degrees, "MSci")
+    if(!is.null(input$interest_llb) && input$interest_llb) selected_degrees <- c(selected_degrees, "LLB")
+    if(!is.null(input$interest_mbbs) && input$interest_mbbs) selected_degrees <- c(selected_degrees, "MBBS")
+    if(!is.null(input$interest_mbbsbsc) && input$interest_mbbsbsc) selected_degrees <- c(selected_degrees, "MBBS BSc")
     if(!is.null(input$interest_mpharm) && input$interest_mpharm) selected_degrees <- c(selected_degrees, "MPharm")
+    if(!is.null(input$interest_basc) && input$interest_basc) selected_degrees <- c(selected_degrees, "BASc")
+    if(!is.null(input$interest_bfa) && input$interest_bfa) selected_degrees <- c(selected_degrees, "BFA")
+    if(!is.null(input$interest_mbio) && input$interest_mbio) selected_degrees <- c(selected_degrees, "MBio")
+    if(!is.null(input$interest_mchem) && input$interest_mchem) selected_degrees <- c(selected_degrees, "MChem")
+    if(!is.null(input$interest_mphys) && input$interest_mphys) selected_degrees <- c(selected_degrees, "MPhys")
+    if(!is.null(input$interest_mmathphys) && input$interest_mmathphys) selected_degrees <- c(selected_degrees, "MMathPhys")
+    if(!is.null(input$interest_mmath) && input$interest_mmath) selected_degrees <- c(selected_degrees, "MMath")
+    if(!is.null(input$interest_mmathstat) && input$interest_mmathstat) selected_degrees <- c(selected_degrees, "MMathStat")
+    if(!is.null(input$interest_mmorse) && input$interest_mmorse) selected_degrees <- c(selected_degrees, "MMORSE")
+    if(!is.null(input$interest_babsc) && input$interest_babsc) selected_degrees <- c(selected_degrees, "BA/BSc")
+    
     # Filter by subject interests
     selected_subjects <- c()
     if(!is.null(input$interest_natural_sciences) && input$interest_natural_sciences) {
